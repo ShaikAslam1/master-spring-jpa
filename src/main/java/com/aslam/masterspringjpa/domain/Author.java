@@ -1,25 +1,29 @@
 package com.aslam.masterspringjpa.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Author {
-    @Id
-    @GeneratedValue
+public class Author extends BaseEntity {
+//    @Id
+//    @GeneratedValue
     /* (strategy = GenerationType.SEQUENCE, generator = "author_sequence") */
     /* @SequenceGenerator(name = "author_sequence", sequenceName = "author_sequence", allocationSize = 1) */
-    private Integer id;
+//    private Integer id;
     @Column(length = 20)
     private String firstname;
     @Column(length = 30)
@@ -27,10 +31,6 @@ public class Author {
     @Column(unique = true, nullable = false)
     private String email;
     private int age;
-    @Column(updatable = false, nullable = false)
-    private LocalDateTime createdAt;
-    @Column(insertable = false)
-    private LocalDateTime lastModified;
 
     @ManyToMany(mappedBy = "authors")
     private List<Course> courses;
