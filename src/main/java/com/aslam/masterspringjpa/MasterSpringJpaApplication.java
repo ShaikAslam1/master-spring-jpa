@@ -1,7 +1,9 @@
 package com.aslam.masterspringjpa;
 
 import com.aslam.masterspringjpa.domain.Author;
+import com.aslam.masterspringjpa.domain.Video;
 import com.aslam.masterspringjpa.repositories.AuthorRepository;
+import com.aslam.masterspringjpa.repositories.VideoRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +19,9 @@ public class MasterSpringJpaApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(AuthorRepository authorRepository) {
+	public CommandLineRunner commandLineRunner(
+			AuthorRepository authorRepository,
+			VideoRepository videoRepository) {
 		return args -> {
 			var author = Author.builder()
 					.firstname("Aslam")
@@ -27,6 +31,12 @@ public class MasterSpringJpaApplication {
 					.createdAt(LocalDateTime.now())
 					.build();
 			authorRepository.save(author);
+
+			var video = Video.builder()
+					.name("abc")
+					.length(10)
+					.build();
+			videoRepository.save(video);
 		};
 	}
 
