@@ -1,23 +1,28 @@
 package com.aslam.masterspringjpa.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@NamedQueries({
+        @NamedQuery(
+                name = "Author.findByNamedQuery",
+                query = "SELECT a FROM Author a WHERE a.age >= :age"
+        ),
+        @NamedQuery(
+                name = "Author.updateByNamedQuery",
+                query = "UPDATE Author a SET a.age = :age"
+        )
+})
 public class Author extends BaseEntity {
 //    @Id
 //    @GeneratedValue
@@ -32,6 +37,16 @@ public class Author extends BaseEntity {
     private String email;
     private int age;
 
-    @ManyToMany(mappedBy = "authors")
+    @ManyToMany(mappedBy = "authors", fetch = FetchType.LAZY)
     private List<Course> courses;
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }
