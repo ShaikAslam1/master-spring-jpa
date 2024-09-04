@@ -22,11 +22,13 @@ public class BaseEntity {
     @GeneratedValue
     private Integer id;
 
-    @Column(updatable = false, nullable = false)
+    @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
-    @Column(insertable = false)
+    @Column(name = "last_modified_at", insertable = false)
     private LocalDateTime lastModifiedAt;
 
+    @Column(name = "created_by")
     private String createdBy;
+    @Column(name = "last_modified_by")
     private String lastModifiedBy;
 }
